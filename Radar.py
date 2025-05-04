@@ -47,7 +47,6 @@ class Radar:
         # Compute an approximation of the distance (in meters) from the radar to the point
         distance = np.sqrt( (latitude - self.location.latitude) ** 2 + \
                             (longitude - self.location.longitude) ** 2 ) * 111000
-        
         # If the distance is inside the detection range, proceed
         if distance <= max_range:
             # Compute a 2D-multivariate gaussian that models the attenuation of the radar's detections

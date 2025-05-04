@@ -22,6 +22,9 @@ class Map:
         self.width      = width             # Number of coordinates int the x-axis
         self.radars     = radars            # List containing the radars (objects)
         self.map = None
+        self.probabilities = []
+        self.min_prob = 100
+        self.max_prob = 0
 
     def generate_radars(self, n_radars: np.int32) -> None:
         """ Generates n-radars randomly and inserts them into the radars list """
@@ -31,7 +34,6 @@ class Map:
         rand_lats = np.random.choice(a=lat_range, size=n_radars, replace=False)
         rand_lons = np.random.choice(a=lon_range, size=n_radars, replace=False)
         self.radars = []        # Initialize 'radars' as an empty list
-
         # Loop for each radar that must be generated
         for i in range(n_radars):
             # Create a new radar
@@ -55,35 +57,60 @@ class Map:
             locations[i] = self.radars[i].location.to_numpy()
         return locations
     
+    
     def compute_detection_map(self) -> np.array:
         """ Computes the detection map for each coordinate in the map (with all the radars) """
         #array of array of MapTiles
         temp_map = []
-        lat_division = self.boundaries.calculate_lat_diff()/self.height
-        lon_division = self.boundaries.calculate_lon_diff()/self.width
+        lat_division = self.boundaries.calculate_lat_diff()/self.width
+        lon_division = self.boundaries.calculate_lon_diff()/self.height
+        
         radar_locs = self.get_radars_locations_numpy()
+
+        #calculate detection probability of 1 tile
+        def compute_detection_probabilities(lat,long):
+            #lat long of current tile
+           # print("lat: ", lat, "long: ",long, "height: ", self.height,"width: ",self.width)
+            probabilities = []
+            for rdr in self.radars:
+                probabilities.append(rdr.compute_detection_level(lat,long))
+            if(min(probabilities)<self.min_prob):
+                self.min_prob = min(probabilities)
+            if(max(probabilities)>self.max_prob):
+                self.max_prob = max(probabilities)
+            return max(probabilities)
+        
         for y in range(0,self.height):
             temp_row = []
+            temp_prob = []
             for x in range(0,self.width):
                 temp_map_tile = MapTile(
-                    lat = y * lat_division,
-                    long =  x * lon_division,
+                    lat = min(self.boundaries.min_lat + x * lat_division,self.boundaries.max_lat),
+                    long = min(self.boundaries.min_lon + y * lon_division,self.boundaries.max_lon),
                     x = x,
                     y = y,
-                    detection_prob = 0 #to do 
+                    detection_prob=0
                 )
-                if any(coord[0] == temp_map_tile.lat and coord[1] == temp_map_tile.long for coord in radar_locs):
-                    rdr = filter(lambda xr: xr.location.latitude == temp_map_tile.lat and xr.location.longitude == temp_map_tile.long, self.radars)
-                    temp_map_tile.set_radar(rdr) #add radar to maptile
+                l = compute_detection_probabilities(temp_map_tile.lat,temp_map_tile.long)
                 temp_row.append(temp_map_tile)
-                
+                temp_prob.append(l)
             temp_map.append(temp_row)
+            self.probabilities.append(temp_prob)
+        for y in range(0,self.height):
+            for x in range(0,self.width):
+                #min-max technique
+                cur_prob = self.probabilities[y][x]
+                residual_cost = 0.01
+                possibility = (((cur_prob-self.min_prob)/(self.max_prob-self.min_prob))*(1-residual_cost)) + residual_cost
+                temp_map[y][x].set_detection_prob(possibility)
         self.map = temp_map
         print("Map has been set!")
-        print([[y.get_detection_prob() for y in x] for x in temp_map])
         return [[y.get_detection_prob() for y in x] for x in temp_map]
+
+           
+
     
-    def generate_graph(self):
+    def generate_graph(self): #transfer to searchengine.py then delete this function afterwards
         def get_surrounding_maptiles(map_tile): #get the top left right bottom maptiles of the current maptiles (aka cells)
             if type(map_tile) is not MapTile: return
             top_bottom = [1,0,-1,0]
@@ -118,28 +145,7 @@ class Map:
         print(astarpath)
         return astarpath
 
-    def calculate_detection_prob(self):
-        if self.map is None: return
-        def get_detection_prob_list_of_maptile(current_maptile, residual_cost = 0.01):
-            if type(current_maptile) is not current_maptile: return
-            if current_maptile.get_radar() is None: return
-            list_of_detection_prob = []
-            for rdr in self.radars:
-                if type(rdr) is not Radar: return
-                list_of_detection_prob.append(rdr.compute_detection_level(current_maptile.lat, current_maptile.long))
-            p_max = max(list_of_detection_prob)
-            p_min = min(list_of_detection_prob)
-            for itm in list_of_detection_prob:
-                itm = ((itm - p_min)/(p_max-p_min))
-                itm = (itm*(1-residual_cost)) + residual_cost
-            return max(list_of_detection_prob) 
-        for y in range(0,self.height): #loop through all maptiles and calculate the cost (aka edge values) for every map tile
-            for x in range(0,self.width):
-                current_maptile = self.map[y][x]
-                if type(current_maptile) is not MapTile: return
-                #set the maximum probability to current maptile
-                probability_for_maptile = get_detection_prob_list_of_maptile(current_maptile)
-                current_maptile.set_detection_prob(probability_for_maptile)
+    
 
 
 
