@@ -11,7 +11,9 @@ def h1(current_node, objective_node) -> np.float32:
     """ First heuristic to implement """
     global NODES_EXPANDED
     h = 0
-    ...
+    x1, y1 = current_node
+    x2, y2 = objective_node
+    h = abs(x1 - x2) + abs(y1 - y2)
     NODES_EXPANDED += 1
     return h
 
@@ -19,7 +21,9 @@ def h2(current_node, objective_node) -> np.float32:
     """ Second heuristic to implement """
     global NODES_EXPANDED
     h = 0
-    ...
+    x1, y1 = current_node
+    x2, y2 = objective_node
+    h = max(abs(x1 - x2),abs(y1 - y2))
     NODES_EXPANDED += 1
     return h
 
@@ -35,7 +39,10 @@ def build_graph(detection_map: np.array, tolerance: np.float32) -> nx.DiGraph:
 
 def discretize_coords(high_level_plan: np.array, boundaries: Boundaries, map_width: np.int32, map_height: np.int32) -> np.array:
     """ Converts coordiantes from (lat, lon) into (x, y) """
-    ...
+    width_res = boundaries.calculate_lat_diff/map_width #calculate the difference in lat from 1 tile to another
+    height_res = boundaries.calculate_lon_diff/map_height #calculate the difference in long from 1 tile to another
+    return [((v[0]/width_res),(v[1]/height_res)) for v in high_level_plan]
+        
 
 def path_finding(G: nx.DiGraph,
                  heuristic_function,

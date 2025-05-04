@@ -5,6 +5,7 @@ from Boundaries import Boundaries
 from Radar import Radar
 from tqdm import tqdm
 from MapTile import MapTile
+import networkx as nx
 
 # Constant that avoids setting cells to have an associated cost of zero
 EPSILON = 1e-4
@@ -66,7 +67,7 @@ class Map:
             for x in range(0,self.width):
                 temp_map_tile = MapTile(
                     lat = y * lat_division,
-                    lon = x * lon_division,
+                    long =  x * lon_division,
                     x = x,
                     y = y,
                     detection_prob = 0 #to do 
@@ -79,6 +80,8 @@ class Map:
             temp_map.append(temp_row)
         self.map = temp_map
         print("Map has been set!")
+        print([[y.get_detection_prob() for y in x] for x in temp_map])
+        return [[y.get_detection_prob() for y in x] for x in temp_map]
     
     def generate_graph(self):
         def get_surrounding_maptiles(map_tile): #get the top left right bottom maptiles of the current maptiles (aka cells)
@@ -110,8 +113,10 @@ class Map:
                 current_maptile.set_edges(temp_edge_values[0],temp_edge_values[1],temp_edge_values[2],temp_edge_values[3]) # the costs are then set into the maptile
         print("all cost edges for all vertices have been set. Graph generated.")
 
-    def generate_astar_path():
-        pass
+    def generate_astar_path(graph,start, target, heuristic):
+        astarpath = nx.astar_path(graph,start,target,heuristic)
+        print(astarpath)
+        return astarpath
 
     def calculate_detection_prob(self):
         if self.map is None: return
