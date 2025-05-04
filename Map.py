@@ -107,38 +107,6 @@ class Map:
         print("Map has been set!")
         return [[y.get_detection_prob() for y in x] for x in temp_map]
 
-           
-
-    
-    def generate_graph(self): #transfer to searchengine.py then delete this function afterwards
-        def get_surrounding_maptiles(map_tile): #get the top left right bottom maptiles of the current maptiles (aka cells)
-            if type(map_tile) is not MapTile: return
-            top_bottom = [1,0,-1,0]
-            left_right = [0,-1,0,1]
-            neighbours = []
-            #top, then left, then bottom, then right 
-            for i in range(0,4):
-                neighbour_y = map_tile.y+top_bottom[i]
-                neighbour_x = map_tile.x+left_right[i]
-                if neighbour_y >=0 and neighbour_x>=0 and neighbour_y < self.height and neighbour_x < self.width:
-                    neighbours.append(self.map[neighbour_y][neighbour_x])
-                else:
-                    neighbours.append(None)
-            return neighbours
-        
-        for y in range(0,self.height): #loop through all maptiles and calculate the cost (aka edge values) for every map tile
-            for x in range(0,self.width):
-                current_maptile = self.map[y][x]
-                if type(current_maptile) is not MapTile: return
-                temp_neighbours = get_surrounding_maptiles(current_maptile)
-                temp_edge_values = []
-                for n in range(0,4):
-                    if temp_neighbours[n] is not None and type(temp_neighbours[n]) is MapTile:
-                        temp_edge_values.append(temp_neighbours[n].get_detection_prob()) #set the cost to the detection probability of the map tile being transitioned into
-                    else:
-                        temp_edge_values.append(np.inf) # if the maptile is out of bounds, set cost to infinity
-                current_maptile.set_edges(temp_edge_values[0],temp_edge_values[1],temp_edge_values[2],temp_edge_values[3]) # the costs are then set into the maptile
-        print("all cost edges for all vertices have been set. Graph generated.")
 
     def generate_astar_path(graph,start, target, heuristic):
         astarpath = nx.astar_path(graph,start,target,heuristic)
