@@ -13,6 +13,6 @@ class Boundaries:
         self.max_lon = max_lon      # Maximum longitude of the map
         self.min_lon = min_lon      # Minimum longitude of the map
     def calculate_lat_diff(self):
-        return self.max_lat - self.min_lat # Calculate difference in max and min latitudes
+        return abs(self.max_lat - self.min_lat) # Calculate difference in max and min latitudes
     def calculate_lon_diff(self):
-        return self.max_lon - self.min_lon # Calculate difference in max and min longitudes
+        return abs(self.max_lon - self.min_lon) # Calculate difference in max and min longitudes
