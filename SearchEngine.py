@@ -70,20 +70,28 @@ def discretize_coords(high_level_plan: np.array, boundaries: Boundaries, map_wid
         
 
 def bfs(locations, initial_location_index, heuristic_function):
-    q = [*locations]
+    print("POIS", locations, initial_location_index)
+    q = list(locations) 
     cur = locations[initial_location_index]
-    q = [o for o in q if (o != cur).all()]
+    q.pop(initial_location_index)
     f = [cur]
-    while len(q)>0:
+    while q: # While q is not empty
         c = np.inf
         lcn = None
-        for g in q:
-            if heuristic_function(cur,g)<c:
-                c = heuristic_function(cur,g)
+        lcn_index = -1 
+        for i, g in enumerate(q):
+            if heuristic_function(cur, g) < c:
+                c = heuristic_function(cur, g)
                 lcn = g
-        q = [o for o in q if (o != lcn).all()]
-        cur = lcn
-        f.append(lcn)
+                lcn_index = i
+        if lcn is not None:
+            f.append(lcn)
+            cur = lcn
+            q.pop(lcn_index) 
+        else:
+            break
+        print("q", q)
+    print("POIS2", f, q)
     return f
 def path_finding(G: nx.DiGraph,
                  heuristic_function,
