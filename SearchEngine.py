@@ -37,7 +37,7 @@ def build_graph(detection_map: np.array, tolerance: np.float32) -> nx.DiGraph:
     #   -> Go right
     # Not every point has always 4 possible neighbors
     graph = nx.DiGraph()
-    def get_neighbours(detection_map:np.array, cur_x,cur_y):
+    def get_neighbours(detection_map:np.array, cur_x,cur_y, tolerance):
         #get neighbours whose detection possibilities are under tolerance
         top_bottom = [-1,0,1,0]
         left_right = [0,1,0,-1]
@@ -45,14 +45,14 @@ def build_graph(detection_map: np.array, tolerance: np.float32) -> nx.DiGraph:
         for i in range(0,4):
             neighbour_y = cur_y + top_bottom[i]
             neighbour_x = cur_x + left_right[i]
-            if neighbour_y >=0 and neighbour_x>=0 and neighbour_y < len(detection_map) and neighbour_x < len(detection_map[0]):
+            if neighbour_y >=0 and neighbour_x>=0 and neighbour_y < len(detection_map) and neighbour_x < len(detection_map[0]) and detection_map[neighbour_y][neighbour_x]<tolerance:
                 neighbours.append((neighbour_x,neighbour_y))
         return neighbours
     
     for y in range(0,len(detection_map)): #loop through all maptiles and calculate the cost (aka edge values) for every map tile
         for x in range(0,len(detection_map[0])):
             current_node = (x,y)
-            temp_neighbours = get_neighbours(detection_map,x,y)
+            temp_neighbours = get_neighbours(detection_map,x,y, tolerance)
             graph.add_node(current_node)
             for n in temp_neighbours:
                 diff = abs(detection_map[y][x] - detection_map[n[1]][n[0]])

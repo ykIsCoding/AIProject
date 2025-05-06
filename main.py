@@ -38,6 +38,9 @@ def plot_solution(detection_map: np.array, solution_plan: list, bicubic: bool=Tr
     """ Auxiliary function for plotting the solution plan with markers in each POI """
     plt.figure(figsize=(8,8))
     plt.title("Solution plan")
+    if (len(solution_plan)==0):
+        print("solution not found with this tolerance. Consider increasing it.") 
+        return
     print("solution plan length", len(solution_plan), solution_plan[0][0])
     for i in range(len(solution_plan)):
         start_point = solution_plan[i][0]
