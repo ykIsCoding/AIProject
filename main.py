@@ -7,6 +7,7 @@ import os
 from Map import Map
 from Boundaries import Boundaries
 from SearchEngine import build_graph, path_finding, compute_path_cost, h1, h2
+import time
 
 def plot_radar_locations(boundaries: Boundaries, radar_locations: np.array) -> None:
     """ Auxiliary function for plotting the radar locations """
@@ -106,13 +107,15 @@ def main() -> None:
 
     # Plot the detection map (detection fields)
     plot_detection_fields(detection_map=detection_map)
-
+    
     # Build the graph from the detection map
     G = build_graph(detection_map=detection_map, tolerance=execution_parameters['tolerance'])
 
     # Get the POI's that the plane must visit
     POIs = np.array(execution_parameters['POIs'], dtype=np.float32)
 
+    #start time to compute total time taken
+    strt = time.time()
     # Compute the solution
     solution_plan, nodes_expanded = path_finding(G=G,
                                  heuristic_function=h2,
@@ -125,9 +128,12 @@ def main() -> None:
     # Compute the solution cost
     path_cost = compute_path_cost(G=G, solution_plan=solution_plan)
 
+    #end time to compute total tiem taken
+    endt = time.time()
     # Some verbose of the total cost and the number of expanded nodes
     print(f"Total path cost: {path_cost}")
     print(f"Number of expanded nodes: {nodes_expanded}")
+    print(f"Total time taken: {(endt-strt)} seconds")
 
     # Plot the solution
     plot_solution(detection_map=detection_map, solution_plan=solution_plan)

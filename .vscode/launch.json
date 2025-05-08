@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "console": "integratedTerminal",
-            "args": [ "scenario_5", "0.6" ] // Scenario ID and detection tolerance
+            "args": [ "scenario_5", "0.4" ] // Scenario ID and detection tolerance
         },
         {
             "name": "Launch with arguments",
