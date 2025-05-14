@@ -104,13 +104,13 @@ class Map:
                 possibility = (((cur_prob-self.min_prob)/(self.max_prob-self.min_prob))*(1-residual_cost)) + residual_cost
                 temp_map[y][x].set_detection_prob(possibility)
         self.map = temp_map
-        print("Map has been set!")
+        #print("Map has been set!")
         return [[y.get_detection_prob() for y in x] for x in temp_map]
 
 
     def generate_astar_path(graph,start, target, heuristic):
         astarpath = nx.astar_path(graph,start,target,heuristic)
-        print(astarpath)
+        #print(astarpath)
         return astarpath
 
     

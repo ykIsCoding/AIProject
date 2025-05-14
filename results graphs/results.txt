@@ -1,0 +1,161 @@
+Scenario  Heuristic Tolerance Nodes     Cost        Time(s)   
+--------------------------------------------------------------
+scenario_0h1        0.20      59        0.10        0.00065   
+scenario_0h2        0.20      68        0.10        0.00052   
+scenario_0h1        0.40      68        0.10        0.00047   
+scenario_0h2        0.40      212       0.43        0.00146   
+scenario_0h1        0.60      72        0.10        0.00050   
+scenario_0h2        0.60      144       0.18        0.00097   
+scenario_0h1        0.80      68        0.10        0.00054   
+scenario_0h2        0.80      68        0.10        0.00049   
+scenario_0h1        1.00      68        0.10        0.00047   
+scenario_0h2        1.00      82        0.15        0.00050   
+No path found for h1, scenario_1 with tolerance 0.2
+scenario_1h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_1 with tolerance 0.2
+scenario_1h2        0.20      -1        -1.00       -1.00000  
+scenario_1h1        0.40      232       1.72        0.00157   
+scenario_1h2        0.40      67        0.25        0.00044   
+scenario_1h1        0.60      172       1.06        0.00113   
+scenario_1h2        0.60      139       0.35        0.00083   
+scenario_1h1        0.80      53        0.10        0.00041   
+scenario_1h2        0.80      207       0.57        0.00136   
+scenario_1h1        1.00      251       1.10        0.00172   
+scenario_1h2        1.00      198       0.40        0.00116   
+No path found for h1, scenario_2 with tolerance 0.2
+scenario_2h1        0.20      -1        -1.00       -1.00000  
+scenario_2h2        0.20      819       0.51        0.00524   
+scenario_2h1        0.40      1129      3.32        0.00718   
+scenario_2h2        0.40      991       2.04        0.00637   
+scenario_2h1        0.60      809       5.33        0.00492   
+No path found for h2, scenario_2 with tolerance 0.6
+scenario_2h2        0.60      -1        -1.00       -1.00000  
+scenario_2h1        0.80      1175      2.75        0.00720   
+scenario_2h2        0.80      1506      7.51        0.00936   
+scenario_2h1        1.00      1364      4.98        0.00842   
+scenario_2h2        1.00      661       4.59        0.00397   
+No path found for h1, scenario_3 with tolerance 0.2
+scenario_3h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_3 with tolerance 0.2
+scenario_3h2        0.20      -1        -1.00       -1.00000  
+No path found for h1, scenario_3 with tolerance 0.4
+scenario_3h1        0.40      -1        -1.00       -1.00000  
+No path found for h2, scenario_3 with tolerance 0.4
+scenario_3h2        0.40      -1        -1.00       -1.00000  
+scenario_3h1        0.60      1334      12.26       0.00801   
+scenario_3h2        0.60      1233      6.08        0.00747   
+scenario_3h1        0.80      1200      7.85        0.05129   
+scenario_3h2        0.80      1305      7.68        0.00991   
+scenario_3h1        1.00      1027      5.77        0.00644   
+scenario_3h2        1.00      1047      5.94        0.00698   
+No path found for h1, scenario_4 with tolerance 0.2
+scenario_4h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_4 with tolerance 0.2
+scenario_4h2        0.20      -1        -1.00       -1.00000  
+No path found for h1, scenario_4 with tolerance 0.4
+scenario_4h1        0.40      -1        -1.00       -1.00000  
+scenario_4h2        0.40      1159      3.48        0.00716   
+scenario_4h1        0.60      1153      9.89        0.00675   
+scenario_4h2        0.60      739       4.50        0.00433   
+scenario_4h1        0.80      833       9.02        0.00494   
+scenario_4h2        0.80      1303      14.46       0.00787   
+scenario_4h1        1.00      1869      8.21        0.01129   
+scenario_4h2        1.00      1175      5.23        0.00706   
+No path found for h1, scenario_5 with tolerance 0.2
+scenario_5h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_5 with tolerance 0.2
+scenario_5h2        0.20      -1        -1.00       -1.00000  
+No path found for h1, scenario_5 with tolerance 0.4
+scenario_5h1        0.40      -1        -1.00       -1.00000  
+scenario_5h2        0.40      3502      29.94       0.02110   
+scenario_5h1        0.60      8857      34.84       0.05473   
+scenario_5h2        0.60      3703      20.37       0.02367   
+scenario_5h1        0.80      5376      40.35       0.03664   
+scenario_5h2        0.80      6481      37.28       0.04212   
+scenario_5h1        1.00      6356      36.17       0.04038   
+scenario_5h2        1.00      5057      18.94       0.03104   
+No path found for h1, scenario_6 with tolerance 0.2
+scenario_6h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_6 with tolerance 0.2
+scenario_6h2        0.20      -1        -1.00       -1.00000  
+No path found for h1, scenario_6 with tolerance 0.4
+scenario_6h1        0.40      -1        -1.00       -1.00000  
+No path found for h2, scenario_6 with tolerance 0.4
+scenario_6h2        0.40      -1        -1.00       -1.00000  
+scenario_6h1        0.60      4905      29.01       0.02989   
+No path found for h2, scenario_6 with tolerance 0.6
+scenario_6h2        0.60      -1        -1.00       -1.00000  
+scenario_6h1        0.80      3691      29.84       0.02283   
+scenario_6h2        0.80      4727      26.12       0.02877   
+scenario_6h1        1.00      2864      27.37       0.01723   
+scenario_6h2        1.00      5153      26.64       0.03154   
+No path found for h1, scenario_7 with tolerance 0.2
+scenario_7h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_7 with tolerance 0.2
+scenario_7h2        0.20      -1        -1.00       -1.00000  
+No path found for h1, scenario_7 with tolerance 0.4
+scenario_7h1        0.40      -1        -1.00       -1.00000  
+No path found for h2, scenario_7 with tolerance 0.4
+scenario_7h2        0.40      -1        -1.00       -1.00000  
+No path found for h1, scenario_7 with tolerance 0.6
+scenario_7h1        0.60      -1        -1.00       -1.00000  
+scenario_7h2        0.60      42186     58.09       0.27356   
+scenario_7h1        0.80      23237     76.81       0.15134   
+scenario_7h2        0.80      21509     62.07       0.13683   
+scenario_7h1        1.00      29828     52.80       0.18911   
+scenario_7h2        1.00      30661     70.94       0.20339   
+No path found for h1, scenario_8 with tolerance 0.2
+scenario_8h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_8 with tolerance 0.2
+scenario_8h2        0.20      -1        -1.00       -1.00000  
+No path found for h1, scenario_8 with tolerance 0.4
+scenario_8h1        0.40      -1        -1.00       -1.00000  
+No path found for h2, scenario_8 with tolerance 0.4
+scenario_8h2        0.40      -1        -1.00       -1.00000  
+scenario_8h1        0.60      89830     182.35      0.62770   
+scenario_8h2        0.60      77138     93.20       0.51306   
+scenario_8h1        0.80      116289    147.36      0.77013   
+scenario_8h2        0.80      99076     133.51      0.68573   
+scenario_8h1        1.00      88615     106.46      0.63228   
+scenario_8h2        1.00      73568     129.58      0.50242   
+No path found for h1, scenario_9 with tolerance 0.2
+scenario_9h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_9 with tolerance 0.2
+scenario_9h2        0.20      -1        -1.00       -1.00000  
+No path found for h1, scenario_9 with tolerance 0.4
+scenario_9h1        0.40      -1        -1.00       -1.00000  
+No path found for h2, scenario_9 with tolerance 0.4
+scenario_9h2        0.40      -1        -1.00       -1.00000  
+scenario_9h1        0.60      2724816   799.25      24.69998  
+scenario_9h2        0.60      2568567   889.48      21.92967  
+scenario_9h1        0.80      3063172   1593.40     27.25899  
+scenario_9h2        0.80      3080566   1305.69     28.25105  
+scenario_9h1        1.00      2798465   1534.58     25.22687  
+scenario_9h2        1.00      2572692   1022.07     23.50235  
+No path found for h1, scenario_10 with tolerance 0.2
+scenario_10h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_10 with tolerance 0.2
+scenario_10h2        0.20      -1        -1.00       -1.00000  
+No path found for h1, scenario_10 with tolerance 0.4
+scenario_10h1        0.40      -1        -1.00       -1.00000  
+scenario_10h2        0.40      155304    57.46       1.23306   
+scenario_10h1        0.60      89430     39.88       0.71511   
+No path found for h2, scenario_10 with tolerance 0.6
+scenario_10h2        0.60      -1        -1.00       -1.00000  
+scenario_10h1        0.80      66904     113.75      0.46448   
+scenario_10h2        0.80      68826     69.65       0.54434   
+scenario_10h1        1.00      181026    117.34      1.22913   
+scenario_10h2        1.00      161478    85.41       1.24725   
+No path found for h1, scenario_11 with tolerance 0.2
+scenario_11h1        0.20      -1        -1.00       -1.00000  
+No path found for h2, scenario_11 with tolerance 0.2
+scenario_11h2        0.20      -1        -1.00       -1.00000  
+scenario_11h1        0.40      126267    145.73      0.88662   
+No path found for h2, scenario_11 with tolerance 0.4
+scenario_11h2        0.40      -1        -1.00       -1.00000  
+scenario_11h1        0.60      125294    207.90      0.83182   
+scenario_11h2        0.60      108084    113.37      0.72733   
+scenario_11h1        0.80      145041    261.89      0.97123   
+scenario_11h2        0.80      139039    194.30      0.95191   
+scenario_11h1        1.00      167512    174.56      1.24699   
+scenario_11h2        1.00      160392    262.68      1.09980

@@ -9,24 +9,22 @@ from queue import PriorityQueue
 NODES_EXPANDED = 0
 
 def h1(current_node, objective_node) -> np.float32:
-    """ First heuristic to implement """
     global NODES_EXPANDED
-    h = 0
+    NODES_EXPANDED += 1
     x1, y1 = current_node
     x2, y2 = objective_node
-    h = abs(x1 - x2) + abs(y1 - y2)
-    NODES_EXPANDED += 1
-    return h
+    return (abs(x1 - x2) + abs(y1 - y2)) * EPSILON
+    # Manhattan distance heuristic
+    # h = abs(x1 - x2) + abs(y1 - y2)
 
 def h2(current_node, objective_node) -> np.float32:
-    """ Second heuristic to implement """
     global NODES_EXPANDED
-    h = 0
+    NODES_EXPANDED += 1
     x1, y1 = current_node
     x2, y2 = objective_node
-    h = max(abs(x1 - x2),abs(y1 - y2))
-    NODES_EXPANDED += 1
-    return h
+    return max(abs(x1 - x2), abs(y1 - y2)) * EPSILON
+    # Chebyshev distance heuristic
+    # h = max(abs(x1 - x2), abs(y1 - y2))
 
 def build_graph(detection_map: np.array, tolerance: np.float32) -> nx.DiGraph:
     """ Builds an adjacency graph (not an adjacency matrix) from the detection map """
@@ -55,10 +53,9 @@ def build_graph(detection_map: np.array, tolerance: np.float32) -> nx.DiGraph:
             temp_neighbours = get_neighbours(detection_map,x,y, tolerance)
             graph.add_node(current_node)
             for n in temp_neighbours:
-                diff = abs(detection_map[y][x] - detection_map[n[1]][n[0]])
-                if diff <= tolerance:
-                    graph.add_edge(current_node, n, weight=diff)
-    print("all cost edges for all vertices have been set. Graph generated.")
+                if detection_map[y][x] <= tolerance and detection_map[n[1]][n[0]] <= tolerance:graph.add_edge(current_node, n, weight=detection_map[n[1]][n[0]])
+
+    #print("all cost edges for all vertices have been set. Graph generated.")
     return graph
 
 
@@ -70,7 +67,7 @@ def discretize_coords(high_level_plan: np.array, boundaries: Boundaries, map_wid
         
 
 def bfs(locations, initial_location_index, heuristic_function):
-    print("POIS", locations, initial_location_index)
+    #print("POIS", locations, initial_location_index)
     q = list(locations) 
     cur = locations[initial_location_index]
     q.pop(initial_location_index)
@@ -90,8 +87,8 @@ def bfs(locations, initial_location_index, heuristic_function):
             q.pop(lcn_index) 
         else:
             break
-        print("q", q)
-    print("POIS2", f, q)
+        #print("q", q)
+    #print("POIS2", f, q)
     return f
 def path_finding(G: nx.DiGraph,
                  heuristic_function,
@@ -108,7 +105,7 @@ def path_finding(G: nx.DiGraph,
     #discretize coordinates
     high_level_plan = discretize_coords(high_level_plan,boundaries,map_width,map_height)
     #use a star to compute least cost path
-    print("high level plan",high_level_plan)
+    #print("high level plan",high_level_plan)
     full_path = []
     total_cost = 0
     for i in range(len(high_level_plan) - 1):
@@ -116,28 +113,32 @@ def path_finding(G: nx.DiGraph,
         goal_node = high_level_plan[i + 1]
         try:
             shortest_path = nx.astar_path(G, start_node, goal_node, heuristic=heuristic_function)
-            print("shortest path", shortest_path, "from: ",start_node," to ", goal_node)
+            #print("shortest path", shortest_path, "from: ",start_node," to ", goal_node)
             full_path.append(shortest_path) 
-            print("**********************************")
+            #print("**********************************")
             total_cost += compute_path_cost(G, [shortest_path])
             
         except nx.NetworkXNoPath:
-            print(f"No path found between discretized locations {start_node} and {goal_node}")
+            print(f"No path found for heuristic {heuristic_function.__name__} with tol {G[start_node][goal_node]['weight']}, scenario {locations}")
             return [], NODES_EXPANDED
     return full_path, NODES_EXPANDED
                 
 
 def compute_path_cost(G: nx.DiGraph, solution_plan: list) -> np.float32:
-    """ Computes the total cost of the whole planning solution """
-    print("solution plan", solution_plan)
+    """ Computes the total detection cost of the full path """
     total_cost = 0.0
-    if len(solution_plan) < 2:
-        return total_cost
-    for h in range(len(solution_plan)):
-        for i in range(len(solution_plan[h]) - 1):
-            u = solution_plan[h][i]
-            v = solution_plan[h][i + 1]
+
+    if len(solution_plan) == 0:
+        return -1.0
+
+    for segment in solution_plan:
+        for i in range(len(segment) - 1):
+            u = segment[i]
+            v = segment[i + 1]
             if G.has_edge(u, v):
                 total_cost += G[u][v]['weight']
-            else: return -1.0
+            else:
+                return -1.0  # Edge unexpectedly missing (invalid plan)
+
     return np.float32(total_cost)
+
